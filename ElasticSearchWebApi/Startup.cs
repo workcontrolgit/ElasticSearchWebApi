@@ -25,10 +25,11 @@ namespace ElasticSearchWebApi
         {
             services.AddControllers();
 
+            var url = Configuration["elasticsearch:url"];
+            var defaultIndex = Configuration["elasticsearch:index"];
+
             // Configure elastic search URI and default index
-            var node = new Uri("http://localhost:9200");
-            var settings = new ConnectionSettings(node);
-            settings.DefaultIndex("products");
+            var settings = new ConnectionSettings(new Uri(url)).DefaultIndex(defaultIndex);
 
             // Add elstic cliend dependency
             var client = new ElasticClient(settings);
